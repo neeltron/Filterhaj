@@ -2,6 +2,7 @@ import discord
 import os
 
 client = discord.Client()
+image_types = ["png", "jpeg", "gif", "jpg"]
 
 @client.event
 async def on_ready():
@@ -11,7 +12,9 @@ async def on_ready():
 @client.event
 async def on_message(message):
   if message.author != client.user:
-    await message.channel.send(message.content[::-1])
+    for attachment in message.attachments:
+      if any(attachment.filename.lower().endswith(image) for image in image_types):
+        await attachment.save(attachment.filename)
 
 token = os.environ.get("DISCORD_BOT_SECRET")
 client.run(token)
