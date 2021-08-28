@@ -19,9 +19,12 @@ async def on_message(message):
         await attachment.save('input.png')
         # await message.reply(file=attachment.filename)
         await message.reply("Here's your framed pic!\n")
+        newsize = (2993, 2543)
         img1 = Image.open(r"frame.png")
+        # img1 = img1.resize(newsize)
         img2 = Image.open(r"input.png")
-        img1.paste(img2, (0,0))
+        img2 = img2.resize(newsize)
+        img1.paste(img2, (300,300))
         img1.save('output.png')
         with open('output.png', 'rb') as f:
           await message.channel.send(file=discord.File(f))
