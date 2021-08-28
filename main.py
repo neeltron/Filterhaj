@@ -20,7 +20,7 @@ async def on_message(message):
         # await message.reply(file=attachment.filename)
         await message.reply("Here's your framed pic!\n")
         newsize = (2993, 2543)
-        img1 = Image.open(r"frame.png")
+        img1 = Image.open(r"frame.png").convert('RGB')
         # img1 = img1.resize(newsize)
         img2 = Image.open(r"input.png")
         img2 = img2.resize(newsize)
