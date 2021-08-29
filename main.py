@@ -46,7 +46,7 @@ async def on_message(message):
                 await attachment.save('input.png')
                 # await message.reply(file=attachment.filename)
                 await message.reply("Here's your framed pic!\n")
-                newsize = (1497, 1272)
+                newsize = (1847, 1402)
                 img1 = Image.open(r"oldhaj.png").convert('RGBA')
                 # img1 = img1.resize(newsize)
                 img2 = Image.open(r"input.png").convert('RGBA')
