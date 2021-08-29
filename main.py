@@ -62,7 +62,7 @@ async def on_message(message):
           with open('output.png', 'rb') as f:
             await message.channel.send(file=discord.File(f))
 
-    if message.content.startswith("/riddle"):
+    if message.content.startswith("s!riddle"):
       string = random.choice(riddle_qs)
       await message.channel.send(string)
       index = int(riddle_qs.index(string))
