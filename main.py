@@ -22,14 +22,22 @@ riddle_qs = ["What happened when the shark got famous?",
 "How did the hammerhead do on the Math exam?",
 "What do you call a shark who wants to be by himself?",
 "Why don't sharks like fast food?",
-"What did the shark say to the other shark?"
+"What did the shark say to the other shark?",
+"How do you throw a shark out of a bar?",
+"What did the shark get on his biology test?",
+"Where do sharks go on vacation?",
+"Who is the most famous shark playwright?"
 ]
 
 riddle_ans = ["He became a starfish.", 
  "He nailed it.",
  "A lone shark.",
  "Because they can't catch it!",
- "There’s some-fin special about you!"
+ "There’s some-fin special about you!",
+ "You cast it out.",
+ "A sea-minus.",
+ "Finland.",
+"William Sharkspeare!"
  ]
 
 
@@ -61,6 +69,10 @@ async def on_message(message):
           img2.save('output.png')
           with open('output.png', 'rb') as f:
             await message.channel.send(file=discord.File(f))
+
+    if message.content.startswith("s!help"):
+      await message.channel.send("```s!riddle - messages a random riddle\ns!buy - buy a blahaj\ns!feed - feed your blahaj\ns!me - view your blahaj's health and points\ns!status```")
+      
 
     if message.content.startswith("s!riddle"):
       string = random.choice(riddle_qs)
