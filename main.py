@@ -2,6 +2,7 @@ import discord
 import os
 import youtube_dl
 import random
+import nacl
 from keep_alive import keep_alive
 from PIL import Image
 from discord.ext import commands, tasks
@@ -71,7 +72,7 @@ async def on_message(message):
             await message.channel.send(file=discord.File(f))
 
     if message.content.startswith("s!help"):
-      await message.channel.send("```s!riddle - messages a random riddle\ns!buy - buy a blahaj\ns!feed - feed your blahaj\ns!me - view your blahaj's health and points\ns!status```")
+      await message.channel.send("```**COMMANDS:**\ns!riddle - get a random riddle\n/blahajsinging, /blahajdancing - for random videos about sharks\n/blahajplay - play music to help you relax\n\n**PET-A-SHARK: The Game - commands:**\ns!buy - buy a blahaj\ns!feed - feed your blahaj\ns!me - view your blahaj's health and points\ns!status - see where your blahaj is ```")
       
 
     if message.content.startswith("s!riddle"):
@@ -110,66 +111,12 @@ async def on_message(message):
       await message.channel.send("Ayy, your blahaj is happy!")
 
 #try to let the bot enter the voice channel and play the music
-@bot.command(name='join', help='Tells the bot to join the voice channel')
-async def join(ctx):
-    if not ctx.message.author.voice:
-        await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
-        return
-    else:
-        channel = ctx.message.author.voice.channel
-    await channel.connect()
-  
+    if message.content.startswith('s!play'):
+      channel = message.author.voice.channel
+      vc = await channel.connect()
+      vc.play(discord.FFmpegPCMAudio("relax.mp3"), after=lambda e: print('done', e))
 
-@bot.command(pass_context=True)
-async def leave(ctx):
-    if(ctx.voice_client):
-      await ctx.guild.voice_client.disconnect()
-      await ctx.send("I left the voice channel")
-    else:
-      await ctx.send("I am not in a voice channel")
 
-#@bot.command(pass_context=True)
-# async def play(cctx.message.author.voice.channel
-#     if(ctx.author.voice): 
-#       channel = discord.utils.get(ctx.guild.voice_channels, name='General')
-#       voice = await channel.connect()
-
-#       #download youtube 
-#       ydl_opts = {
-#         'format': 'bestaudio/best',
-#         'postprocessor': [{
-#           'key': 'FFmpegExtractAudio',
-#           'preferredcodec': 'mp3',
-#           'preferredquality':'192'
-#         }]
-#       }
-#       with youtube_dl.YouTubeDL(ydl_opts) as ydl:
-#         ydl.download([url])
-#       for file in os.listdir("./"):
-#         if file.endswith(".mp3"):
-#           os.rename(file, "relax.mp3" )
-
-#       source = FFmpegPCMAudio('relax.mp3')
-#       voice.play(source)
-
-#     else:
-#       await ctx.send("You are not in a voice channel!")
-  # server = ctx.message.server
-  # voice_client = client.voice_client_in(server)
-  # await voice_client.disconnect()
-  # await ctx.voice_client.disconnect()
-
-# @bot.command(pass_context=True)
-# async def play(ctx, url):
-#   server = ctx.message.server
-#   voice_client = client.voice_client_in(server) #access the voice channel of the server
-#   player = await voice_client.create_ytdl_player(url) #create a player
-#   players[server.id] = player
-#   player.start()
-
-#get shark fact api
-#https://fungenerators.com/api/facts/
-#https://fungenerators.com/random/facts/animal/saw-shark
 def get_saw_shark_fact():
   response = requests.get("https://api.fungenerators.com/")
   json_data = json.loads(response.text) 
