@@ -114,7 +114,12 @@ async def on_message(message):
     if message.content.startswith('s!play'):
       channel = message.author.voice.channel
       vc = await channel.connect()
-      vc.play(discord.FFmpegPCMAudio("relax.mp3"), after=lambda e: print('done', e))
+      vc.play(discord.FFmpegPCMAudio("babyshark.mp3"), after=lambda e: print('done', e))
+    
+
+    if message.content.startswith('s!dc'):
+      channel = message.author.voice.channel
+      await channel.disconnect()
 
 
 def get_saw_shark_fact():
